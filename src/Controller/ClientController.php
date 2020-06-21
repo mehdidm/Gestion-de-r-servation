@@ -9,22 +9,37 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use App\Form\SearchType;
+use App\Entity\Search;
 /**
  * @Route("/client")
  */
 class ClientController extends AbstractController
 {
-    /**
-     * @Route("/", name="client_index", methods={"GET"})
+   /**
+     * @Route("/", name="client_index")
      */
-    public function index(ClientRepository $clientRepository): Response
+    public function index(Request $request): Response
     {
-        return $this->render('client/index.html.twig', [
-            'clients' => $clientRepository->findAll(),
-        ]);
-    }
-
+    $Search = new Search();
+    $form = $this->createForm(SearchType::class,$Search);
+    $form->handleRequest($request);
+   //initialement le tableau des articles est vide, 
+   //c.a.d on affiche les articles que lorsque l'utilisateur clique sur le bouton rechercher
+   $clients= $this->getDoctrine()->getRepository(Client::class)->findAll();
+    
+   if($form->isSubmitted() && $form->isValid()) {
+   //on récupère le nom d'article tapé dans le formulaire
+    $nom = $Search->getNom();   
+    if ($nom!="") 
+      //si on a fourni un nom d'article on affiche tous les articles ayant ce nom
+      $clients= $this->getDoctrine()->getRepository(Client::class)->findBy(['nom' => $nom] );
+    else   
+      //si si aucun nom n'est fourni on affiche tous les articles
+      $clients= $this->getDoctrine()->getRepository(Client::class)->findAll();
+   }
+    return  $this->render('client/index.html.twig',[ 'form' =>$form->createView(), 'clients' => $clients]);  
+  }
     /**
      * @Route("/new", name="client_new", methods={"GET","POST"})
      */
