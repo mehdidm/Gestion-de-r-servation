@@ -13,11 +13,19 @@
             </tr>
             <tr>
                 <th>Date_r</th>
-                <td>{{ reservation.dateR ? reservation.dateR|date('Y-m-d') : '' }}</td>
+                <td>{{ reservation.dateR ? reservation.dateR|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
                 <th>Etat</th>
                 <td>{{ reservation.etat }}</td>
+            </tr>
+            <tr>
+            <th>Client</th>
+            <td>{{reservation.idCli.nom}}</td>
+            </tr>
+             <tr>
+            <th>Service</th>
+            <td>{{reservation.idService.libelle}}</td>
             </tr>
         </tbody>
     </table>

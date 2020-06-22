@@ -3,19 +3,21 @@
 namespace App\Controller;
 
 use App\Entity\Client;
+use App\Entity\Search;
 use App\Form\ClientType;
+use App\Form\SearchType;
+use App\Form\RegistrationType;
 use App\Repository\ClientRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Form\SearchType;
-use App\Entity\Search;
-use App\Form\RegistrationType;
-use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 /**
+ *  @IsGranted("ROLE_ADMIN")
  * @Route("/client")
  */
 class ClientController extends AbstractController

@@ -1,8 +1,11 @@
 <?php
 
 namespace App\Form;
-
+use App\Entity\Client;
+use App\Entity\Service;
 use App\Entity\Reservation;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -14,8 +17,12 @@ class ReservationType extends AbstractType
         $builder
             ->add('date_r')
             ->add('etat')
-            ->add('id_cli')
-            ->add('id_service')
+            ->add('id_cli',EntityType::class,['class' => Client::class,
+                 'choice_label' => 'nom',
+                'label' => 'Client'])
+            ->add('id_service',EntityType::class,['class' => Service::class,
+                'choice_label' => 'libelle',
+               'label' => 'Service'])
         ;
     }
 
