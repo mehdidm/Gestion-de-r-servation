@@ -6,11 +6,20 @@ use App\Repository\ClientRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
- * @ORM\Entity(repositoryClass=ClientRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
+ * @UniqueEntity(
+ *     fields={"email"},
+ *     message="L'émail que vous avez tapé est déjà utilisé !"
+ * )
  */
-class Client
+
+class Client implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -43,6 +52,34 @@ class Client
      * @ORM\OneToMany(targetEntity=Reservation::class, mappedBy="id_cli")
      */
     private $reservations;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     *  @Assert\Length(
+     *      min = 8,
+     *      minMessage = "Votre mot de passe doit comporter au minimum {{ limit }} caractères")
+     *  @Assert\EqualTo(propertyPath = "confirm_password", message="Vous n'avez pas passé le même mot de passe !" )
+     */
+    private $password;
+
+
+     /**
+      *  @Assert\EqualTo(propertyPath = "password", message="Vous n'avez pas passé le même mot de passe !" )
+     */
+    private $confirm_password;
+
+    public function getConfirmPassword()
+    {
+        return $this->confirm_password;
+    }
+
+    public function setConfirmPassword($confirm_password)
+    {
+        $this->confirm_password = $confirm_password;
+
+        return $this;
+    }
+
 
     public function __construct()
     {
@@ -132,4 +169,37 @@ class Client
 
         return $this;
     }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+    public function getRoles()
+    {
+        return ['ROLE_USER'];
+    }
+
+    public function eraseCredentials() {}
+
+    public function getSalt() {}
+    public function getUsername(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $nom;
+
+        return $this;
+    }
+
+   
 }

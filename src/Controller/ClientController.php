@@ -11,6 +11,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\SearchType;
 use App\Entity\Search;
+use App\Form\RegistrationType;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 /**
  * @Route("/client")
  */
@@ -40,10 +44,10 @@ class ClientController extends AbstractController
    }
     return  $this->render('client/index.html.twig',[ 'form' =>$form->createView(), 'clients' => $clients]);  
   }
-    /**
+     /**
      * @Route("/new", name="client_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+ /* public function new(Request $request): Response
     {
         $client = new Client();
         $form = $this->createForm(ClientType::class, $client);
@@ -62,7 +66,30 @@ class ClientController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+*/
+/**
+     * @Route("/new", name="client_new", methods={"GET","POST"})
+     */
+    public function new(Request $request, EntityManagerInterface  $em, 
+    UserPasswordEncoderInterface $encoder)
+{
+    $client = new Client();
+    $form  = $this->createForm(ClientType::class, $client);
+    $form->handleRequest($request);
 
+    if($form->isSubmitted() && $form->isValid()) {
+        $hash = $encoder->encodePassword($client,$client->getPassword());
+        $client->setPassword($hash);
+    
+    //l'objet $em sera affecté automatiquement grâce à l'injection des dépendances de symfony 4  
+       $em->persist($client);
+       $em->flush();  
+       return $this->redirectToRoute('client_index');
+    }
+   return $this->render('client/new.html.twig', 
+                       ['form' =>$form->createView()]);
+}
+  
     /**
      * @Route("/{id}", name="client_show", methods={"GET"})
      */
@@ -92,6 +119,7 @@ class ClientController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    
 
     /**
      * @Route("/{id}", name="client_delete", methods={"DELETE"})
@@ -106,4 +134,7 @@ class ClientController extends AbstractController
 
         return $this->redirectToRoute('client_index');
     }
+    
+
+
 }
