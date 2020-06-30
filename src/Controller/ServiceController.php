@@ -5,10 +5,11 @@ namespace App\Controller;
 use App\Entity\Service;
 use App\Form\ServiceType;
 use App\Repository\ServiceRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/service")
@@ -27,6 +28,7 @@ class ServiceController extends AbstractController
     }
 
     /**
+     *@IsGranted("ROLE_ADMIN")
      * @Route("/new", name="service_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
@@ -50,6 +52,7 @@ class ServiceController extends AbstractController
     }
 
     /**
+     *@IsGranted("ROLE_ADMIN")
      * @Route("/{id}", name="service_show", methods={"GET"})
      */
     public function show(Service $service): Response
@@ -60,6 +63,7 @@ class ServiceController extends AbstractController
     }
 
     /**
+     * *@IsGranted("ROLE_ADMIN")
      * @Route("/{id}/edit", name="service_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Service $service): Response
@@ -80,6 +84,7 @@ class ServiceController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/{id}", name="service_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Service $service): Response

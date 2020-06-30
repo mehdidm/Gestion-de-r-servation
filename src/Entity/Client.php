@@ -58,7 +58,6 @@ class Client implements UserInterface
      *  @Assert\Length(
      *      min = 8,
      *      minMessage = "Votre mot de passe doit comporter au minimum {{ limit }} caractères")
-     *  @Assert\EqualTo(propertyPath = "confirm_password", message="Vous n'avez pas passé le même mot de passe !" )
      */
     private $password;
       /**
@@ -221,3 +220,4 @@ class Client implements UserInterface
 
    
 }
+

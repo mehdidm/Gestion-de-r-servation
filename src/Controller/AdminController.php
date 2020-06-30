@@ -5,10 +5,17 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Client;
-use App\Repository\UserRepository;
+
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\ClientRepository;
+
+
+
+use App\Form\EditUserType;
+
+
+
 
 
 
@@ -17,9 +24,9 @@ use App\Repository\ClientRepository;
 */
 
 class AdminController extends AbstractController
-{
+{   
     /**
-     * @Route("/admin", name="admin")
+     * @Route("/", name="admin")
      */
     public function index()
     {
@@ -29,6 +36,22 @@ class AdminController extends AbstractController
     }
 
      /**
+     * @Route("/clients/modifier/{id}", name="modifier_client")
+     */
+    public function editUser(Request $request, Client $client, EntityManagerInterface  $em) {
+       
+        $form = $this->createForm(EditUserType::class,$client);
+  
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+          $em->flush();
+  
+          return $this->redirectToRoute('admin_clients');
+        }
+  
+        return $this->render('admin/editUser.html.twig', ['formUser' => $form->createView()]);
+      }
+     /**
      * @Route("/clients", name="clients")
      */
     public function usersList(ClientRepository $client) {
@@ -36,4 +59,6 @@ class AdminController extends AbstractController
             'clients' => $client->findAll()
         ]);
     }
+
+   
 }

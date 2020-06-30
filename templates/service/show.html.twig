@@ -1,11 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Service{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="/css/clients.css">
 
+
+{% endblock %}
 {% block body %}
     <h1>Service</h1>
 
-    <table class="table">
+    <table class="table table-info t">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -20,11 +24,12 @@
                 <td>{{ service.description }}</td>
             </tr>
         </tbody>
-    </table>
+        
+    <a href="{{ path('service_index') }}"class="btn btn-info">back to list</a>
 
-    <a href="{{ path('service_index') }}">back to list</a>
-
-    <a href="{{ path('service_edit', {'id': service.id}) }}">edit</a>
+    <a href="{{ path('service_edit', {'id': service.id}) }}"class="btn btn-info">edit</a>
 
     {{ include('service/_delete_form.html.twig') }}
+    </table>
+
 {% endblock %}

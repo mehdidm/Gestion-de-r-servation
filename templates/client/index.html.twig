@@ -1,6 +1,8 @@
-{% extends 'base.html.twig' %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
+integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+{% block stylesheets %}{% endblock %}
+{{ include('com/navbar.html.twig')}}
 
-{% block title %}Client index{% endblock %}
 
 {% block body %}
 
@@ -40,8 +42,8 @@
                 <td>{{ client.adresse }}</td>
                 <td>{{ client.email }}</td>
                 <td>
-                    <a href="{{ path('client_show', {'id': client.id}) }}">show</a>
-                    <a href="{{ path('client_edit', {'id': client.id}) }}">edit</a>
+                    <a href="{{ path('client_show', {'id': client.id}) }}" class="btn btn-info">show</a>
+                    
                 </td>
             </tr>
         {% else %}
@@ -52,5 +54,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('client_new') }}">Create new</a>
+    <a href="{{ path('client_new') }}"class="btn btn-success">Create new</a>
 {% endblock %}

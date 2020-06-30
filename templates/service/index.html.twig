@@ -2,16 +2,23 @@
 
 {% block title %}Service index{% endblock %}
 
-{% block body %}
-    <h1>Service index</h1>
+{% block stylesheets %}
+<link rel="stylesheet" href="/css/service.css">
 
-    <table class="table">
+
+{% endblock %}
+{% block body %}
+    <h1 class="titre">Service index</h1>
+
+    <table class="table  table-info t">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Libelle</th>
                 <th>Description</th>
+                {% if is_granted('ROLE_ADMIN') %}  
                 <th>actions</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -20,10 +27,12 @@
                 <td>{{ service.id }}</td>
                 <td>{{ service.libelle }}</td>
                 <td>{{ service.description }}</td>
-                <td>
-                    <a href="{{ path('service_show', {'id': service.id}) }}">show</a>
-                    <a href="{{ path('service_edit', {'id': service.id}) }}">edit</a>
+                {% if is_granted('ROLE_ADMIN') %}  
+                <td> 
+                    <a href="{{ path('service_show', {'id': service.id}) }}"class="btn btn-info">show</a>
+                    <a href="{{ path('service_edit', {'id': service.id}) }}"class="btn btn-info">edit</a>
                 </td>
+                {% endif %}
             </tr>
         {% else %}
             <tr>
@@ -31,7 +40,9 @@
             </tr>
         {% endfor %}
         </tbody>
+        {% if is_granted('ROLE_ADMIN') %}  
+        <a href="{{ path('service_new') }}"class="btn btn-info">Create new</a>
+        {% endif %}
     </table>
-
-    <a href="{{ path('service_new') }}">Create new</a>
+  
 {% endblock %}

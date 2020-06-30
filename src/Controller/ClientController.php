@@ -17,12 +17,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 /**
- *  @IsGranted("ROLE_ADMIN")
+ 
  * @Route("/client")
  */
 class ClientController extends AbstractController
 {
    /**
+     *  @IsGranted("ROLE_ADMIN")
      * @Route("/", name="client_index")
      */
     public function index(Request $request): Response
@@ -124,6 +125,7 @@ class ClientController extends AbstractController
     
 
     /**
+     *  @IsGranted("ROLE_ADMIN")
      * @Route("/{id}", name="client_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Client $client): Response
@@ -134,7 +136,7 @@ class ClientController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('client_index');
+        return $this->redirectToRoute('acceuil');
     }
     
 

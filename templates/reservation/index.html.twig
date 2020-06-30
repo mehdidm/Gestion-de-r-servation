@@ -1,9 +1,14 @@
 {% extends 'base.html.twig' %}
 {% block title%} Liste des Reservations{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="/css/reservations.css">
+
+
+{% endblock %}
 {% block body %}
 
 {% if reservations %}
-    <table id="reservations" class="table table-striped">
+    <table id="reservations" class="table table-info t">
     
         <thead>
             <tr>
@@ -24,8 +29,8 @@
                 <td>{{ reservation.idCli.nom }}</td>
                 <td>{{ reservation.idService.libelle }}</td>
                 <td>
-                    <a href="{{ path('reservation_show', {'id': reservation.id}) }}">show</a>
-                    <a href="{{ path('reservation_edit', {'id': reservation.id}) }}">edit</a>
+                    <a href="{{ path('reservation_show', {'id': reservation.id}) }}"class="btn btn-info">show</a>
+                    <a href="{{ path('reservation_edit', {'id': reservation.id}) }}"class="btn btn-info">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -34,9 +39,10 @@
             </tr>
         {% endfor %}
         </tbody>
+        <a href="{{ path('reservation_new') }}"class="btn btn-info">Create new</a>
     </table>
   {% else %}
     <p>Aucun Reservation</p>
   {% endif %} 
-    <a href="{{ path('reservation_new') }}">Create new</a>
+    
 {% endblock %}

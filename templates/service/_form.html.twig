@@ -1,4 +1,30 @@
+
+ 
+ 
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
+ integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+ {% block stylesheets %}{% endblock %}
+ 
+
+{% block body %} 
 {{ form_start(form) }}
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(form) }}
+    </div>
+<form>
+    <div class="form-group">
+        <div class="col">
+            {{ form_row(form.libelle) }}
+        </div>
+        <div class="col" id="some-custom-id">
+            {{ form_row(form.description) }}
+        </div>
+    </div>
+    
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <button class="btn btn-info">{{ button_label|default('Save') }}</button>
+</form>
+   
+    
 {{ form_end(form) }}
+{% endblock %}

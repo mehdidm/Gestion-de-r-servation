@@ -42,6 +42,7 @@ class SercurityController extends AbstractController
       return $this->render('sercurity/login.html.twig',['lastUsername'=>$lastUsername,'error' => $error]);
     }
 
+    
 /**
  * @Route("/deconnexion",name="security_logout")
  */

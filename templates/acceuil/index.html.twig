@@ -1,8 +1,50 @@
 {% extends 'base.html.twig' %}
 {% block title %}Home{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="/css/acceuil.css">
+
+
+{% endblock %}
 
 {% block body %}
 
-    <h1>Client index</h1>
+    <h1 class="title_acceuil">Beauty Center</h1>
+    
+   
+    <p class="shine">Shine bright like a diamond</p>
+    
+  
+    <div class="feat bg-gray pt-5 pb-5">
+        <div class="container">
+          <div class="row">
+            <div class="section-head col-sm-12">
+              <h4><span>Why Choose</span> us?</h4>
+           </div>
+
+            <div class="col-lg-4 col-sm-6">
+              <div class="item"> <span class="icon feature_box_col_one"><img  src="/img/1.png"/></span>
+                <h6>Modern</h6>
+                <p>Notre univers de bien-être vous procure tout ce que dont vous en avez besoin de la tête aux pieds : soyez satisfaite..</p>
+              </div>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+              <div class="item"> <span class="icon feature_box_col_two"><img  src="/img/2.png"/></span>
+                <h6>Your Photoshoping</h6>
+                <p>Les robes de mariée de Fakher Wedding Dresses sont placées sous le signe de l’émotion dans un esprit mariage romantique..</p>
+              </div>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+              <div class="item"> <span class="icon feature_box_col_three"><img  src="/img/3.png"/></span>
+                <h6>Your Photoshoping</h6>
+                <p>Chez  Beauty Center, vous êtes la plus belle reine de tous les temps, Notre équipe est prête de tout cœur à subvenir à tous vos besoins</p>
+              </div>
+            </div>
+         
+           
+          </div>
+        </div>
+      </div>
+    
+    
 
 {% endblock %}

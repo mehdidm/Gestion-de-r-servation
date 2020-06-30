@@ -1,9 +1,14 @@
 {% extends 'base.html.twig' %}
 {% block title%} Liste des Utilisateurs{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="/css/clients.css">
 
+
+{% endblock %}
 {% block body %}
-<h1>Litse des Utilisateurs</h1>
- <table id="users" class="table table-striped">
+<h1 class="titre">Litse des Utilisateurs</h1>
+
+ <table id="users" class="table table-info t">
       <thead>
         <tr>
           <th>Id</th>
@@ -28,9 +33,11 @@
              </td>
            <td>
               <a href="{{ path('client_edit', {'id': client.id }) }}" class="btn btn-dark">Modifier</a>
-             
+              <a href="{{ path('admin_modifier_client', {'id': client.id }) }}" class="btn btn-info">Modifier Role</a>
+              {{ include('client/_delete_form.html.twig') }}
             </td>
           </tr>
+         
         {% endfor %}
       </tbody>
     </table>
